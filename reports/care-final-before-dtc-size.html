@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARE Vehicle Health Report</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:40px 20px;border-bottom:2px solid #C9A227;background:#101010}
+.logo{font-family:'Chopsic',Arial,sans-serif;font-size:70px;font-weight:normal;letter-spacing:6px;color:#C9A227}
+.title{letter-spacing:5px;margin-top:8px}
+main{max-width:1000px;margin:auto;padding:30px 20px}
+h2{color:#C9A227;border-bottom:1px solid #333;padding-bottom:10px;margin-top:30px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:#141414;border:1px solid #292929;border-radius:8px;padding:16px}
+label{display:block;color:#999;font-size:12px;letter-spacing:1px;margin-bottom:7px}
+input,select,textarea{width:100%;background:#090909;color:#fff;border:1px solid #444;border-radius:6px;padding:11px;font-size:15px}
+textarea{min-height:70px;resize:vertical}
+.inspection{margin-bottom:12px}
+.row{display:flex;gap:12px;align-items:center}
+.row strong{flex:1}
+button{background:#C9A227;color:#000;border:0;border-radius:6px;padding:14px 22px;font-weight:bold;margin-top:20px;cursor:pointer}
+footer{text-align:center;color:#777;padding:30px;border-top:1px solid #222;margin-top:30px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.row{display:block}.row select{margin-top:10px}}
+</style>
+
+<style>
+.photo-area{margin-top:12px}
+.photo-input{display:none}
+.photo-button{display:inline-block;background:#C9A227;color:#000;padding:9px 14px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:13px}
+.photo-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.photo-item{position:relative}
+.photo-item img{width:120px;height:90px;object-fit:cover;border-radius:6px;border:1px solid #444}
+.photo-remove{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border:0;border-radius:50%;background:#ff5555;color:#fff;font-weight:bold;cursor:pointer;padding:0;margin:0}
+</style>
+
+
+<style>
+.report-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+.report-actions button{
+    margin-top:0;
+}
+.secondary{
+    background:#222 !important;
+    color:#C9A227 !important;
+    border:1px solid #C9A227 !important;
+}
+</style>
+
+
+<style>
+@media print {
+
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
+
+    html, body {
+        background: #080808 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    header {
+        background: #101010 !important;
+        border-bottom: 2px solid #C9A227 !important;
+    }
+
+    .logo,
+    h2 {
+        color: #C9A227 !important;
+    }
+
+    .card {
+        background: #141414 !important;
+        border: 1px solid #333 !important;
+        break-inside: avoid;
+    }
+
+    .photo-button,
+    .report-actions,
+    button,
+    input[type="file"] {
+        display: none !important;
+    }
+
+    textarea,
+    input,
+    select {
+        background: transparent !important;
+        color: #ffffff !important;
+        border: none !important;
+    }
+
+    textarea {
+        resize: none !important;
+    }
+
+    .photo-grid img {
+        max-width: 150px !important;
+        max-height: 110px !important;
+        object-fit: cover !important;
+    }
+
+    footer {
+        color: #777 !important;
+    }
+}
+</style>
+
+
+<style>
+.logo {
+    font-family: Chopsic, Arial, sans-serif !important;
+    font-size: 70px !important;
+    font-weight: normal !important;
+    letter-spacing: 6px !important;
+}
+</style>
+
+
+<style>
+@font-face {
+    font-family: 'CARE-Chopsic';
+    src: url('Chopsic.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.logo {
+    font-family: 'CARE-Chopsic', sans-serif !important;
+    font-size: 70px !important;
+    font-weight: normal !important;
+    letter-spacing: 5px !important;
+}
+
+.title {
+    font-family: 'CARE-Chopsic', sans-serif !important;
+    font-weight: normal !important;
+}
+</style>
+
+
+<style>
+.health-summary {
+    background:#101010;
+    border:2px solid #C9A227;
+    border-radius:12px;
+    padding:25px;
+    margin:30px 0;
+    text-align:center;
+}
+.health-summary-title {
+    color:#C9A227;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+.health-status {
+    font-size:34px;
+    font-weight:bold;
+    margin:15px 0;
+}
+.health-status.good { color:#39d353; }
+.health-status.attention { color:#f5c542; }
+.health-status.critical { color:#ff4d4d; }
+.health-status.untested { color:#999; }
+.health-detail {
+    color:#999;
+    font-size:13px;
+}
+</style>
+
+
+<style>
+.inspection.status-good {
+    border-left: 5px solid #39d353 !important;
+}
+.inspection.status-attention {
+    border-left: 5px solid #f5c542 !important;
+}
+.inspection.status-critical {
+    border-left: 5px solid #ff4d4d !important;
+}
+.inspection.status-untested {
+    border-left: 5px solid #777 !important;
+}
+
+.status-badge {
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-left:10px;
+}
+.status-badge.good {
+    color:#39d353;
+    border:1px solid #39d353;
+}
+.status-badge.attention {
+    color:#f5c542;
+    border:1px solid #f5c542;
+}
+.status-badge.critical {
+    color:#ff4d4d;
+    border:1px solid #ff4d4d;
+}
+.status-badge.untested {
+    color:#999;
+    border:1px solid #777;
+}
+</style>
+
+
+<style>
+.recommendations {
+    background:#101010;
+    border:1px solid #C9A227;
+    border-radius:12px;
+    padding:25px;
+    margin:30px 0;
+}
+.recommendations-title {
+    color:#C9A227;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+.recommendation-box {
+    width:100%;
+    min-height:130px;
+    box-sizing:border-box;
+    background:#181818;
+    color:#fff;
+    border:1px solid #444;
+    border-radius:8px;
+    padding:14px;
+    font-size:14px;
+    resize:vertical;
+}
+</style>
+
+
+<style>
+@media print {
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    body {
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #080808 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    header {
+        text-align: center !important;
+        padding: 8mm 0 6mm !important;
+        border-bottom: 2px solid #C9A227 !important;
+        margin-bottom: 7mm !important;
+    }
+
+    .logo {
+        font-family: 'CARE-Chopsic', 'Chopsic', sans-serif !important;
+        color: #C9A227 !important;
+        font-size: 62px !important;
+        letter-spacing: 5px !important;
+    }
+
+    .title {
+        color: #ffffff !important;
+        letter-spacing: 4px !important;
+        font-size: 16px !important;
+    }
+
+    h2 {
+        color: #C9A227 !important;
+        font-size: 17px !important;
+        letter-spacing: 2px !important;
+        border-bottom: 1px solid #444 !important;
+        padding-bottom: 6px !important;
+        margin-top: 9mm !important;
+        break-after: avoid !important;
+    }
+
+    .grid {
+        gap: 8px !important;
+    }
+
+    .card {
+        background: #141414 !important;
+        border: 1px solid #333 !important;
+        padding: 11px !important;
+        break-inside: avoid !important;
+    }
+
+    .inspection {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 8px !important;
+    }
+
+    .health-summary {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin: 7mm 0 !important;
+    }
+
+    .health-status {
+        font-size: 30px !important;
+    }
+
+    .recommendations {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    .photo-area {
+        break-inside: avoid !important;
+    }
+
+    .photo-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 7px !important;
+    }
+
+    .photo-item {
+        break-inside: avoid !important;
+    }
+
+    .photo-item img {
+        width: 125px !important;
+        height: 90px !important;
+        object-fit: cover !important;
+    }
+
+    .photo-button,
+    .report-actions,
+    button,
+    input[type="file"] {
+        display: none !important;
+    }
+
+    textarea {
+        background: #181818 !important;
+        color: #ffffff !important;
+        border: 1px solid #444 !important;
+    }
+
+    input,
+    select {
+        background: transparent !important;
+        color: #ffffff !important;
+        border: none !important;
+    }
+
+    .status-good {
+        border-left-color: #39d353 !important;
+    }
+
+    .status-attention {
+        border-left-color: #f5c542 !important;
+    }
+
+    .status-critical {
+        border-left-color: #ff4d4d !important;
+    }
+
+    .status-untested {
+        border-left-color: #777 !important;
+    }
+}
+</style>
+
+
+<style>
+.health-ring {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    margin: 10px auto 18px;
+}
+.health-ring svg {
+    width: 150px;
+    height: 150px;
+    transform: rotate(-90deg);
+}
+.health-ring-bg,
+.health-ring-progress {
+    fill: none;
+    stroke-width: 8;
+}
+.health-ring-bg {
+    stroke: #292929;
+}
+.health-ring-progress {
+    stroke: #39d353;
+    stroke-linecap: round;
+    stroke-dasharray: 326.73;
+    stroke-dashoffset: 326.73;
+}
+.health-ring-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.health-percent {
+    color: #fff;
+    font-size: 34px;
+    font-weight: bold;
+}
+.health-ring-label {
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #999;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<div class="logo">CARE</div>
+<div class="title">VEHICLE HEALTH REPORT</div>
+</header>
+
+<main>
+
+<h2>CUSTOMER & VEHICLE INFORMATION</h2>
+
+<div class="grid">
+
+<div class="card">
+<label>CUSTOMER NAME</label>
+<input id="customer" placeholder="Customer name">
+</div>
+
+<div class="card">
+<label>INSPECTION DATE</label>
+<input id="date" type="date">
+</div>
+
+<div class="card">
+<label>MAKE</label>
+<input id="make" placeholder="Toyota">
+</div>
+
+<div class="card">
+<label>PLATE NUMBER</label>
+<input id="plate" placeholder="D12345">
+</div>
+
+<div class="card">
+<label>MODEL</label>
+<input id="model" placeholder="Land Cruiser">
+</div>
+
+<div class="card">
+<label>YEAR</label>
+<input id="year" type="number" placeholder="2022">
+</div>
+
+<div class="card">
+<label>MILEAGE (KM)</label>
+<input id="mileage" type="number" placeholder="45611">
+</div>
+
+<div class="card">
+<label>VIN</label>
+<input id="vin" placeholder="VIN">
+</div>
+
+<div class="card">
+<label>INSPECTION NUMBER</label>
+<input id="report" placeholder="CARE-00001">
+</div>
+
+</div>
+
+
+<div class="health-summary" id="healthSummary">
+    <div class="health-summary-title">OVERALL VEHICLE HEALTH</div>
+
+    <div class="health-ring" id="healthRing">
+        <svg viewBox="0 0 120 120">
+            <circle class="health-ring-bg" cx="60" cy="60" r="52"></circle>
+            <circle class="health-ring-progress" id="healthRingProgress" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="health-ring-content">
+            <div class="health-percent" id="healthPercent">0%</div>
+            <div class="health-ring-label" id="healthRingLabel">NOT TESTED</div>
+        </div>
+    </div>
+
+    <div class="health-detail" id="healthDetail">
+        Complete the inspection to determine vehicle condition.
+    </div>
+</div>
+
+
+<div class="recommendations">
+    <div class="recommendations-title">RECOMMENDATIONS</div>
+    <textarea
+        class="recommendation-box"
+        id="recommendations"
+        style="min-height:220px; resize:vertical;"
+        placeholder="Enter recommended repairs, maintenance items, safety concerns, or other recommendations..."
+    ></textarea>
+</div>
+
+<h2>VEHICLE INSPECTION</h2>
+
+<div id="inspections">
+
+<div class="card inspection">
+<div class="row"><strong>Engine</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>Transmission</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>Brakes</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>Suspension & Steering</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>AC System</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>Electrical</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>Tires</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>Body & Exterior</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="Technician notes..." style="min-height:150px; resize:vertical;"></textarea>
+</div>
+
+<div class="card inspection">
+<div class="row"><strong>Diagnostic Scan</strong>
+<select><option>GOOD</option><option>ATTENTION</option><option>CRITICAL</option><option>NOT TESTED</option></select>
+</div>
+<textarea placeholder="DTCs / diagnostic notes..."></textarea>
+</div>
+
+</div>
+
+
+<div class="card" id="scanner-section">
+<h2>SCANNER DIAGNOSTIC REPORT</h2>
+<label class="photo-button">
+📄 ADD SCANNER PDF
+<input id="scannerPdf" type="file" accept="application/pdf" style="display:none">
+</label>
+<div id="scannerPdfName" style="margin-top:10px;color:#C9A227;font-size:13px;"></div>
+</div>
+
+<div class="card" id="vehicle-media-section">
+
+<h2>VEHICLE PHOTOS</h2>
+
+<h3>EXTERIOR PHOTOS</h3>
+
+<div class="grid">
+
+<div>
+<label>FRONT VIEW</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>RIGHT VIEW</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>LEFT VIEW</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>REAR VIEW</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+</div>
+
+<h3>INTERIOR PHOTOS</h3>
+
+<div class="grid">
+
+<div>
+<label>DASHBOARD VIEW</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>DRIVER DOOR</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>FRONT PASSENGER DOOR</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>REAR LEFT DOOR</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>REAR RIGHT DOOR</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>DRIVER SEAT</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>PASSENGER SEAT</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>REAR SEAT</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>ROOF / CEILING VIEW</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>CENTER CONSOLE</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>INSIDE REAR / TRUNK</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+<div>
+<label>ENGINE VIEW</label>
+<label class="photo-button">
+📷 ADD PHOTO
+<input class="vehicle-photo-input" type="file" accept="image/*" multiple style="display:none">
+</label>
+<div class="photo-grid"></div>
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll(".vehicle-photo-input").forEach(function(input) {
+
+    input.addEventListener("change", function() {
+
+        const grid = input.parentElement.parentElement.querySelector(".photo-grid");
+
+        Array.from(input.files).forEach(file => {
+
+            const item = document.createElement("div");
+            item.className = "photo-item";
+
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+
+            const remove = document.createElement("button");
+            remove.className = "photo-remove";
+            remove.innerHTML = "×";
+            remove.onclick = () => item.remove();
+
+            item.appendChild(img);
+            item.appendChild(remove);
+            grid.appendChild(item);
+
+        });
+
+        input.value = "";
+
+    });
+
+});
+</script>
+
+</div>
+
+<h2>RECOMMENDATIONS</h2>
+
+<div class="card">
+<textarea id="recommendations" placeholder="Enter recommendations..." style="min-height:180px; width:100%; resize:vertical;"></textarea>
+</div>
+
+
+<div class="report-actions">
+    <button onclick="saveReport()">💾 SAVE REPORT</button>
+    <button class="secondary" onclick="loadReport()">📂 LOAD REPORT</button>
+    <button class="secondary" onclick="newReport()">🆕 NEW REPORT</button>
+</div>
+
+<button onclick="window.print()">PRINT / SAVE AS PDF</button>
+
+</main>
+
+<footer>
+CARE AUTO REPAIR<br>
+Vehicle Inspection & Diagnostic Services
+</footer>
+
+
+<script>
+function addPhotos(input, previewId) {
+    const grid = document.getElementById(previewId);
+
+    Array.from(input.files).forEach(file => {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            const item = document.createElement('div');
+            item.className = 'photo-item';
+
+            const img = document.createElement('img');
+            img.src = e.target.result;
+
+            const remove = document.createElement('button');
+            remove.className = 'photo-remove';
+            remove.innerHTML = '×';
+            remove.onclick = () => item.remove();
+
+            item.appendChild(img);
+            item.appendChild(remove);
+            grid.appendChild(item);
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    input.value = '';
+}
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".inspection").forEach(function (section, index) {
+        const name = section.querySelector("strong").textContent.trim();
+        const area = document.createElement("div");
+        area.className = "photo-area";
+
+        if (name === "Tires") {
+            area.innerHTML = `
+                <div style="margin-bottom:8px;color:#999;font-size:12px;">TIRE PHOTOS</div>
+                <div class="grid">
+                    <div>
+                        <label>FRONT LEFT</label>
+                        <label class="photo-button">
+                            📷 Add Photo
+                            <input class="photo-input" type="file" accept="image/*" multiple>
+                        </label>
+                        <div class="photo-grid"></div>
+                    </div>
+                    <div>
+                        <label>FRONT RIGHT</label>
+                        <label class="photo-button">
+                            📷 Add Photo
+                            <input class="photo-input" type="file" accept="image/*" multiple>
+                        </label>
+                        <div class="photo-grid"></div>
+                    </div>
+                    <div>
+                        <label>REAR LEFT</label>
+                        <label class="photo-button">
+                            📷 Add Photo
+                            <input class="photo-input" type="file" accept="image/*" multiple>
+                        </label>
+                        <div class="photo-grid"></div>
+                    </div>
+                    <div>
+                        <label>REAR RIGHT</label>
+                        <label class="photo-button">
+                            📷 Add Photo
+                            <input class="photo-input" type="file" accept="image/*" multiple>
+                        </label>
+                        <div class="photo-grid"></div>
+                    </div>
+                </div>
+            `;
+
+            section.appendChild(area);
+
+            area.querySelectorAll("input").forEach(function(input) {
+                input.addEventListener("change", function() {
+                    const grid = input.parentElement.parentElement.querySelector(".photo-grid");
+                    addPhotos(input, grid.id = "photos-" + Math.random().toString(36).slice(2));
+                });
+            });
+
+        } else {
+            const id = "photos-" + index;
+
+            area.innerHTML = `
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <label class="photo-button">
+                    📷 ADD PHOTO
+                    <input class="photo-input" type="file" accept="image/*" multiple>
+                </label>
+
+                <label class="photo-button">
+                    🎥 ADD VIDEO
+                    <input class="photo-input" type="file" accept="video/*" multiple>
+                </label>
+            </div>
+                <div class="photo-grid" id="${id}"></div>
+            `;
+
+            section.appendChild(area);
+
+            const input = area.querySelector("input");
+            input.addEventListener("change", function() {
+                addPhotos(input, id);
+            });
+        }
+    });
+});
+</script>
+
+
+<script>
+function saveReport() {
+    const data = {};
+
+    document.querySelectorAll("input, select, textarea").forEach((el, i) => {
+        if (el.type === "file") return;
+        data["field_" + i] = el.value;
+    });
+
+    localStorage.setItem("CARE_REPORT", JSON.stringify(data));
+    alert("CARE report saved successfully.");
+}
+
+function loadReport() {
+    const saved = localStorage.getItem("CARE_REPORT");
+
+    if (!saved) {
+        alert("No saved CARE report found.");
+        return;
+    }
+
+    const data = JSON.parse(saved);
+
+    document.querySelectorAll("input, select, textarea").forEach((el, i) => {
+        if (el.type === "file") return;
+
+        const key = "field_" + i;
+
+        if (data[key] !== undefined) {
+            el.value = data[key];
+        }
+    });
+
+    alert("CARE report loaded.");
+}
+
+function newReport() {
+    if (!confirm("Start a new report? Current unsaved information will be cleared.")) {
+        return;
+    }
+
+    document.querySelectorAll("input, textarea").forEach(el => {
+        if (el.type !== "file") {
+            el.value = "";
+        }
+    });
+
+    document.querySelectorAll("select").forEach(el => {
+        el.selectedIndex = 0;
+    });
+
+    document.querySelectorAll(".photo-grid").forEach(el => {
+        el.innerHTML = "";
+    });
+}
+</script>
+
+
+<script>
+function updateOverallHealth() {
+    const statuses = Array.from(document.querySelectorAll(".inspection select"))
+        .map(s => s.value);
+
+    const ring = document.getElementById("healthRing");
+    const progress = document.getElementById("healthRingProgress");
+    const percent = document.getElementById("healthPercent");
+    const label = document.getElementById("healthRingLabel");
+    const detail = document.getElementById("healthDetail");
+
+    const circumference = 2 * Math.PI * 52;
+
+    ring.className = "health-ring";
+
+    const tested = statuses.filter(s => s !== "NOT TESTED");
+
+    if (!tested.length) {
+        percent.textContent = "0%";
+        label.textContent = "NOT TESTED";
+        ring.classList.add("untested");
+        progress.style.strokeDashoffset = circumference;
+        detail.textContent = "Complete the inspection to determine vehicle condition.";
+        return;
+    }
+
+    const good = tested.filter(s => s === "GOOD").length;
+    const attention = tested.filter(s => s === "ATTENTION").length;
+    const critical = tested.filter(s => s === "CRITICAL").length;
+
+    let score = Math.round((good / tested.length) * 100);
+
+    if (critical > 0) {
+        score = Math.min(score, 49);
+        label.textContent = "CRITICAL";
+        progress.style.stroke = "#ff4d4d";
+        detail.textContent = "Critical items require attention before the vehicle is considered healthy.";
+    } else if (attention > 0) {
+        score = Math.min(score, 79);
+        label.textContent = "ATTENTION";
+        progress.style.stroke = "#f5c542";
+        detail.textContent = "Some items require inspection, repair, or monitoring.";
+    } else {
+        label.textContent = "GOOD";
+        progress.style.stroke = "#39d353";
+        detail.textContent = "No issues marked during the completed inspection.";
+    }
+
+    percent.textContent = score + "%";
+    progress.style.strokeDashoffset =
+        circumference - (score / 100) * circumference;
+}
+
+document.addEventListener("change", function(e) {
+    if (e.target.matches(".inspection select")) {
+        updateOverallHealth();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", updateOverallHealth);
+</script>
+
+
+<script>
+function updateInspectionStatus(section) {
+    const select = section.querySelector("select");
+    if (!select) return;
+
+    section.classList.remove(
+        "status-good",
+        "status-attention",
+        "status-critical",
+        "status-untested"
+    );
+
+    const oldBadge = section.querySelector(".status-badge");
+    if (oldBadge) oldBadge.remove();
+
+    let value = select.value;
+    let type = "untested";
+    let label = "⚪ NOT TESTED";
+
+    if (value === "GOOD") {
+        type = "good";
+        label = "🟢 GOOD";
+    } else if (value === "ATTENTION") {
+        type = "attention";
+        label = "🟡 ATTENTION";
+    } else if (value === "CRITICAL") {
+        type = "critical";
+        label = "🔴 CRITICAL";
+    }
+
+    section.classList.add("status-" + type);
+
+    const badge = document.createElement("span");
+    badge.className = "status-badge " + type;
+    badge.textContent = label;
+
+    const heading = section.querySelector("strong, h3, h4");
+    if (heading) heading.appendChild(badge);
+}
+
+document.addEventListener("change", function(e) {
+    if (e.target.matches(".inspection select")) {
+        updateInspectionStatus(e.target.closest(".inspection"));
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".inspection").forEach(updateInspectionStatus);
+});
+</script>
+
+
+<script>
+function updatePdfFilename() {
+    const make = (document.getElementById("make")?.value || "CAR")
+        .trim()
+        .replace(/[\\/:*?"<>|]/g, "");
+
+    const plate = (document.getElementById("plate")?.value || "NO-PLATE")
+        .trim()
+        .replace(/[\\/:*?"<>|]/g, "");
+
+    document.title = make.toUpperCase() + " - " + plate.toUpperCase() + " - CARE";
+}
+
+document.addEventListener("input", function(e) {
+    if (e.target.id === "make" || e.target.id === "plate") {
+        updatePdfFilename();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", updatePdfFilename);
+</script>
+
+</body>
+</html>
