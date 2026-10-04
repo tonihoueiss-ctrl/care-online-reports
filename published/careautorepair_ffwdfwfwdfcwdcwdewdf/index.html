@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FFWDFWFW - NO-PLATE - CARE</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}
+header{text-align:center;padding:40px 20px;border-bottom:2px solid #C9A227;background:#101010}
+.logo{font-family:'Chopsic',Arial,sans-serif;font-size:70px;font-weight:normal;letter-spacing:6px;color:#C9A227}
+.title{letter-spacing:5px;margin-top:8px}
+main{max-width:1000px;margin:auto;padding:30px 20px}
+h2{color:#C9A227;border-bottom:1px solid #333;padding-bottom:10px;margin-top:30px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:#141414;border:1px solid #292929;border-radius:8px;padding:16px}
+label{display:block;color:#999;font-size:12px;letter-spacing:1px;margin-bottom:7px}
+input,select,textarea{width:100%;background:#090909;color:#fff;border:1px solid #444;border-radius:6px;padding:11px;font-size:15px}
+textarea{min-height:70px;resize:vertical;border:1px solid #C9A227;border-radius:6px}
+.inspection{margin-bottom:12px}
+.inspection textarea{
+    border:1px solid #C9A227 !important;
+    border-radius:6px !important;
+    box-sizing:border-box;
+}
+.row{display:flex;gap:12px;align-items:center}
+.row strong{flex:1}
+button{background:#C9A227;color:#000;border:0;border-radius:6px;padding:14px 22px;font-weight:bold;margin-top:20px;cursor:pointer}
+footer{text-align:center;color:#777;padding:30px;border-top:1px solid #222;margin-top:30px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.row{display:block}.row select{margin-top:10px}}
+</style>
+
+<style>
+.photo-area{margin-top:12px}
+.photo-input{display:none}
+.photo-button{display:inline-block;background:#C9A227;color:#000;padding:9px 14px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:13px}
+.photo-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.photo-item{position:relative}
+.photo-item img{width:120px;height:90px;object-fit:cover;border-radius:6px;border:1px solid #444}
+.photo-remove{position:absolute;top:-6px;right:-6px;width:22px;height:22px;border:0;border-radius:50%;background:#ff5555;color:#fff;font-weight:bold;cursor:pointer;padding:0;margin:0}
+</style>
+
+
+<style>
+.report-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+.report-actions button{
+    margin-top:0;
+}
+.secondary{
+    background:#222 !important;
+    color:#C9A227 !important;
+    border:1px solid #C9A227 !important;
+}
+</style>
+
+
+<style>
+@media print {
+
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
+
+    html, body {
+        background: #080808 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    header {
+        background: #101010 !important;
+        border-bottom: 2px solid #C9A227 !important;
+    }
+
+    .logo,
+    h2 {
+        color: #C9A227 !important;
+    }
+
+    .card {
+        background: #141414 !important;
+        border: 1px solid #333 !important;
+        break-inside: avoid;
+    }
+
+    .photo-button,
+    .report-actions,
+    button,
+    input[type="file"] {
+        display: none !important;
+    }
+
+    textarea,
+    input,
+    select {
+        background: transparent !important;
+        color: #ffffff !important;
+        border: none !important;
+    }
+
+    textarea {
+        resize: none !important;
+    }
+
+    .photo-grid img {
+        max-width: 150px !important;
+        max-height: 110px !important;
+        object-fit: cover !important;
+    }
+
+    footer {
+        color: #777 !important;
+    }
+}
+</style>
+
+
+<style>
+.logo {
+    font-family: Chopsic, Arial, sans-serif !important;
+    font-size: 70px !important;
+    font-weight: normal !important;
+    letter-spacing: 6px !important;
+}
+</style>
+
+
+<style>
+@font-face {
+    font-family: 'CARE-Chopsic';
+    src: url('Chopsic.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.logo {
+    font-family: 'CARE-Chopsic', sans-serif !important;
+    font-size: 70px !important;
+    font-weight: normal !important;
+    letter-spacing: 5px !important;
+}
+
+.title {
+    font-family: 'CARE-Chopsic', sans-serif !important;
+    font-weight: normal !important;
+}
+</style>
+
+
+<style>
+.health-summary {
+    background:#101010;
+    border:2px solid #C9A227;
+    border-radius:12px;
+    padding:25px;
+    margin:30px 0;
+    text-align:center;
+}
+.health-summary-title {
+    color:#C9A227;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+.health-status {
+    font-size:34px;
+    font-weight:bold;
+    margin:15px 0;
+}
+.health-status.good { color:#39d353; }
+.health-status.attention { color:#f5c542; }
+.health-status.critical { color:#ff4d4d; }
+.health-status.untested { color:#999; }
+.health-detail {
+    color:#999;
+    font-size:13px;
+}
+</style>
+
+
+<style>
+.inspection.status-good {
+    border-left: 5px solid #39d353 !important;
+}
+.inspection.status-attention {
+    border-left: 5px solid #f5c542 !important;
+}
+.inspection.status-critical {
+    border-left: 5px solid #ff4d4d !important;
+}
+.inspection.status-untested {
+    border-left: 5px solid #777 !important;
+}
+
+.status-badge {
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-left:10px;
+}
+.status-badge.good {
+    color:#39d353;
+    border:1px solid #39d353;
+}
+.status-badge.attention {
+    color:#f5c542;
+    border:1px solid #f5c542;
+}
+.status-badge.critical {
+    color:#ff4d4d;
+    border:1px solid #ff4d4d;
+}
+.status-badge.untested {
+    color:#999;
+    border:1px solid #777;
+}
+</style>
+
+
+<style>
+.recommendations {
+    background:#101010;
+    border:1px solid #C9A227;
+    border-radius:12px;
+    padding:25px;
+    margin:30px 0;
+}
+.recommendations-title {
+    color:#C9A227;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+.recommendation-box {
+    width:100%;
+    min-height:130px;
+    box-sizing:border-box;
+    background:#181818;
+    color:#fff;
+    border:1px solid #444;
+    border-radius:8px;
+    padding:14px;
+    font-size:14px;
+    resize:vertical;
+}
+</style>
+
+
+<style>
+@media print {
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    body {
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #080808 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    header {
+        text-align: center !important;
+        padding: 8mm 0 6mm !important;
+        border-bottom: 2px solid #C9A227 !important;
+        margin-bottom: 7mm !important;
+    }
+
+    .logo {
+        font-family: 'CARE-Chopsic', 'Chopsic', sans-serif !important;
+        color: #C9A227 !important;
+        font-size: 62px !important;
+        letter-spacing: 5px !important;
+    }
+
+    .title {
+        color: #ffffff !important;
+        letter-spacing: 4px !important;
+        font-size: 16px !important;
+    }
+
+    h2 {
+        color: #C9A227 !important;
+        font-size: 17px !important;
+        letter-spacing: 2px !important;
+        border-bottom: 1px solid #444 !important;
+        padding-bottom: 6px !important;
+        margin-top: 9mm !important;
+        break-after: avoid !important;
+    }
+
+    .grid {
+        gap: 8px !important;
+    }
+
+    .card {
+        background: #141414 !important;
+        border: 1px solid #333 !important;
+        padding: 11px !important;
+        break-inside: avoid !important;
+    }
+
+    .inspection {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 8px !important;
+    }
+
+    .health-summary {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin: 7mm 0 !important;
+    }
+
+    .health-status {
+        font-size: 30px !important;
+    }
+
+    .recommendations {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    .photo-area {
+        break-inside: avoid !important;
+    }
+
+    .photo-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 7px !important;
+    }
+
+    .photo-item {
+        break-inside: avoid !important;
+    }
+
+    .photo-item img {
+        width: 125px !important;
+        height: 90px !important;
+        object-fit: cover !important;
+    }
+
+    .photo-button,
+    .report-actions,
+    button,
+    input[type="file"] {
+        display: none !important;
+    }
+
+    textarea {
+        background: #181818 !important;
+        color: #ffffff !important;
+        border: 1px solid #444 !important;
+    }
+
+    input,
+    select {
+        background: transparent !important;
+        color: #ffffff !important;
+        border: none !important;
+    }
+
+    .status-good {
+        border-left-color: #39d353 !important;
+    }
+
+    .status-attention {
+        border-left-color: #f5c542 !important;
+    }
+
+    .status-critical {
+        border-left-color: #ff4d4d !important;
+    }
+
+    .status-untested {
+        border-left-color: #777 !important;
+    }
+}
+</style>
+
+
+<style>
+.health-ring {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    margin: 10px auto 18px;
+}
+.health-ring svg {
+    width: 150px;
+    height: 150px;
+    transform: rotate(-90deg);
+}
+.health-ring-bg,
+.health-ring-progress {
+    fill: none;
+    stroke-width: 8;
+}
+.health-ring-bg {
+    stroke: #292929;
+}
+.health-ring-progress {
+    stroke: #39d353;
+    stroke-linecap: round;
+    stroke-dasharray: 326.73;
+    stroke-dashoffset: 326.73;
+}
+.health-ring-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.health-percent {
+    color: #fff;
+    font-size: 34px;
+    font-weight: bold;
+}
+.health-ring-label {
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #999;
+}
+</style>
+
+
+<style>
+#careMediaLightbox {
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    z-index:99999;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+}
+
+#careMediaLightbox.active {
+    display:flex;
+}
+
+#careMediaLightbox img,
+#careMediaLightbox video {
+    max-width:95vw;
+    max-height:90vh;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:8px;
+    box-shadow:0 0 30px rgba(0,0,0,0.7);
+    cursor:default;
+}
+
+#careMediaLightboxClose {
+    position:absolute !important;
+    top:18px !important;
+    right:22px !important;
+    width:46px !important;
+    height:46px !important;
+    border-radius:50% !important;
+    background:#ffffff !important;
+    color:#000000 !important;
+    font-size:30px !important;
+    font-weight:700 !important;
+    line-height:46px !important;
+    text-align:center !important;
+    padding:0 !important;
+    border:0 !important;
+    cursor:pointer !important;
+    z-index:100001 !important;
+    box-shadow:0 3px 14px rgba(0,0,0,0.5) !important;
+}
+
+.photo-item img,
+.photo-item video {
+    cursor:zoom-in;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<div class="logo">CARE</div>
+<div class="title">VEHICLE HEALTH REPORT</div>
+</header>
+
+<main>
+
+<h2>CUSTOMER &amp; VEHICLE INFORMATION</h2>
+
+<div class="grid">
+
+<div class="card">
+<label>CUSTOMER NAME</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+<div class="card">
+<label>INSPECTION DATE</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+<div class="card">
+<label>MAKE</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">ffwdfwfw</div>
+</div>
+
+<div class="card">
+<label>PLATE NUMBER</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+<div class="card">
+<label>MODEL</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">dfcwdcwdewdf</div>
+</div>
+
+<div class="card">
+<label>YEAR</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+<div class="card">
+<label>MILEAGE (KM)</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+<div class="card">
+<label>VIN</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+<div class="card">
+<label>INSPECTION NUMBER</label>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+</div>
+
+
+<div class="health-summary" id="healthSummary">
+    <div class="health-summary-title">OVERALL VEHICLE HEALTH</div>
+
+    <div class="health-ring" id="healthRing">
+        <svg viewBox="0 0 120 120">
+            <circle class="health-ring-bg" cx="60" cy="60" r="52"></circle>
+            <circle class="health-ring-progress" id="healthRingProgress" cx="60" cy="60" r="52" style="stroke: rgb(57, 211, 83); stroke-dashoffset: 0px;"></circle>
+        </svg>
+        <div class="health-ring-content">
+            <div class="health-percent" id="healthPercent">100%</div>
+            <div class="health-ring-label" id="healthRingLabel">GOOD</div>
+        </div>
+    </div>
+
+    <div class="health-detail" id="healthDetail">No issues marked during the completed inspection.</div>
+</div>
+
+
+<div class="recommendations">
+    <div class="recommendations-title">RECOMMENDATIONS</div>
+    <div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">weffwefwefwef
+wefwefwefwefewfwef
+wfwefwefwfwefwef3rfrewfwefewwgf</div>
+</div>
+
+<h2>VEHICLE INSPECTION</h2>
+
+<div id="inspections">
+
+<div class="card inspection status-good">
+<div class="row"><strong>Engine<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;">ef34f3ferwfewfwefg
+wfwgf3gf3rgrgergfewfgerfgegfrgf3</div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>Transmission<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>Brakes<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>Suspension &amp; Steering<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>AC System<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>Electrical<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>Tires<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="margin-bottom:8px;color:#999;font-size:12px;">TIRE PHOTOS</div>
+                <div class="grid">
+                    <div>
+                        <label>FRONT LEFT</label>
+                        
+                        
+                    </div>
+                    <div>
+                        <label>FRONT RIGHT</label>
+                        
+                        <div class="photo-grid"></div>
+                    </div>
+                    <div>
+                        <label>REAR LEFT</label>
+                        
+                        <div class="photo-grid"></div>
+                    </div>
+                    <div>
+                        <label>REAR RIGHT</label>
+                        
+                        <div class="photo-grid"></div>
+                    </div>
+                </div>
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>Body &amp; Exterior<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+<div class="card inspection status-good">
+<div class="row"><strong>Diagnostic Scan<span class="status-badge good">🟢 GOOD</span></strong>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;">GOOD</div>
+</div>
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px !important; box-sizing: border-box !important; border: 1px solid rgb(201, 162, 39) !important; border-radius: 6px !important;"></div>
+<div class="photo-area">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                
+
+                
+            </div>
+                
+            </div></div>
+
+</div>
+
+
+<div class="card" id="scanner-section">
+<h2>SCANNER DIAGNOSTIC REPORT</h2>
+
+<div id="scannerPdfName" style="margin-top:10px;color:#C9A227;font-size:13px;"></div>
+</div>
+
+<div class="card" id="vehicle-media-section">
+
+<h2>VEHICLE PHOTOS</h2>
+
+<h3>EXTERIOR PHOTOS</h3>
+
+<div class="grid">
+
+
+
+
+
+
+
+
+
+</div>
+
+<h3>INTERIOR PHOTOS</h3>
+
+<div class="grid">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+<h2>RECOMMENDATIONS</h2>
+
+<div class="card">
+<div style="white-space: pre-wrap; min-height: 22px; font-family: Arial, sans-serif; color: rgb(255, 255, 255); padding: 11px; box-sizing: border-box;"></div>
+</div>
+
+
+<div class="report-actions">
+    
+    
+    
+</div>
+
+
+
+</main>
+
+<footer>
+CARE AUTO REPAIR<br>
+Vehicle Inspection &amp; Diagnostic Services
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="careMediaLightbox">
+    <button id="careMediaLightboxClose">×</button>
+    <div id="careMediaLightboxContent"></div>
+</div>
+
+
+<script>
+(function() {
+
+    const lightbox = document.getElementById("careMediaLightbox");
+    const content = document.getElementById("careMediaLightboxContent");
+    const closeButton = document.getElementById("careMediaLightboxClose");
+
+    function openMedia(element) {
+
+        content.innerHTML = "";
+
+        let media;
+
+        if (element.tagName.toLowerCase() === "video") {
+            media = document.createElement("video");
+            media.src = element.getAttribute("src") || element.src;
+            media.controls = true;
+            media.autoplay = true;
+            media.playsInline = true;
+        } else {
+            media = document.createElement("img");
+            media.src = element.getAttribute("src") || element.src;
+        }
+
+        lightbox.classList.add("active");
+        content.appendChild(media);
+    }
+
+    document.addEventListener("click", function(event) {
+
+        const media = event.target.closest(".photo-item img, .photo-item video");
+
+        if (media) {
+            openMedia(media);
+        }
+
+    });
+
+    function closeLightbox() {
+        lightbox.classList.remove("active");
+        content.innerHTML = "";
+    }
+
+    closeButton.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", function(event) {
+        if (event.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeLightbox();
+        }
+    });
+
+})();
+</script>
+
+
+
+
+
+
+
+
+<script>
+async function publishCAREReport() {
+
+    const button = document.getElementById("carePublishButton");
+    const status = document.getElementById("carePublishStatus");
+
+    function setStatus(message, color) {
+        if (status) {
+            status.textContent = message;
+            status.style.color = color || "#666";
+        }
+    }
+
+    button.disabled = true;
+    button.style.opacity = "0.6";
+
+    try {
+
+        setStatus("Preparing report...", "#C9A227");
+
+        const customer = document.getElementById("customer");
+        const make = document.getElementById("make");
+        const model = document.getElementById("model");
+
+        const vehicleName = [
+            make ? make.value.trim() : "",
+            model ? model.value.trim() : ""
+        ].filter(Boolean).join(" ");
+
+        if (!vehicleName) {
+            throw new Error("Please enter the MAKE and MODEL before publishing.");
+        }
+
+        const reportFiles = getCAREReportFiles();
+
+        console.log("========== CARE MEDIA DEBUG ==========");
+        console.log("Photo items:", document.querySelectorAll(".photo-item").length);
+        console.log("Captured media:", reportFiles.media.length);
+        reportFiles.media.forEach(function(entry, i) {
+            console.log("MEDIA", i, entry.file ? entry.file.name : "NO FILE", entry.element ? "ELEMENT OK" : "NO ELEMENT");
+        });
+        console.log("======================================");
+
+        const form = new FormData();
+
+        form.append("vehicle", vehicleName);
+
+        /*
+         * Create a customer-safe copy of the current report.
+         */
+        const clone = document.documentElement.cloneNode(true);
+
+        /*
+         * Copy all live form values into the cloned report BEFORE
+         * removing editor controls. This keeps the original/cloned
+         * field indexes identical.
+         */
+        const originalFields =
+            document.querySelectorAll("input, select, textarea");
+
+        const clonedFields =
+            clone.querySelectorAll("input, select, textarea");
+
+        originalFields.forEach(function(original, index) {
+
+            const cloned = clonedFields[index];
+
+            if (!cloned) return;
+
+            /*
+             * Safari does not allow file input values
+             * to be assigned programmatically.
+             * Uploaded files are handled separately below.
+             */
+            if (original.type === "file") return;
+
+            if (original.tagName.toLowerCase() === "select") {
+
+                cloned.selectedIndex = original.selectedIndex;
+
+            } else if (original.type === "checkbox" || original.type === "radio") {
+
+                cloned.checked = original.checked;
+
+            } else {
+
+                cloned.value = original.value;
+
+                if (cloned.tagName.toLowerCase() === "textarea") {
+                    cloned.textContent = original.value;
+                } else {
+                    cloned.setAttribute("value", original.value);
+                }
+            }
+        });
+
+        /*
+         * Remove empty media sections BEFORE editor controls.
+         * Uploaded media sections are preserved.
+         */
+
+        clone.querySelectorAll(".photo-area").forEach(function(area) {
+
+            const grid = area.querySelector(".photo-grid");
+
+            if (!grid || !grid.querySelector(".photo-item")) {
+
+                area.querySelectorAll(".photo-button").forEach(function(button) {
+                    button.remove();
+                });
+
+                if (grid) {
+                    grid.remove();
+                }
+            }
+        });
+
+        clone.querySelectorAll("#vehicle-media-section .photo-grid").forEach(function(grid) {
+
+            if (!grid.querySelector(".photo-item")) {
+
+                const block = grid.parentElement;
+
+                if (block) {
+                    block.remove();
+                }
+            }
+        });
+
+        /*
+         * Make the customer report static.
+         *
+         * Keep only the lightbox script so photos/videos
+         * can still open normally. All editor scripts are
+         * removed so they cannot recreate ADD PHOTO/VIDEO.
+         */
+        clone.querySelectorAll("script").forEach(function(script) {
+
+            if (!script.textContent.includes("function openMedia")) {
+                script.remove();
+            }
+        });
+
+        /*
+         * Remove editor controls AFTER values are copied.
+         */
+        clone.querySelectorAll(
+            "#carePublishArea, .photo-button, .photo-remove, input[type=file], button:not(#careMediaLightboxClose)"
+        ).forEach(function(el) {
+            el.remove();
+        });
+
+        /*
+         * Convert form fields into customer-visible text.
+         */
+        clone.querySelectorAll("input, select, textarea").forEach(function(el) {
+
+            let value = el.value || "";
+            const display = document.createElement("div");
+
+            display.style.whiteSpace = "pre-wrap";
+            display.style.minHeight = "22px";
+            display.style.fontFamily = "Arial,sans-serif";
+            display.style.color = "#fff";
+            display.style.padding = "11px";
+            display.style.boxSizing = "border-box";
+
+            if (
+                el.tagName.toLowerCase() === "textarea" &&
+                el.parentElement &&
+                el.parentElement &&
+                el.parentElement.classList.contains("inspection")
+            ) {
+                display.style.setProperty("border", "1px solid #C9A227", "important");
+                display.style.setProperty("border-radius", "6px", "important");
+                display.style.setProperty("box-sizing", "border-box", "important");
+                display.style.setProperty("padding", "11px", "important");
+            }
+
+            if (el.tagName.toLowerCase() === "select") {
+
+                const option = el.options[el.selectedIndex];
+                display.textContent =
+                    option ? option.textContent.trim() : value;
+
+            } else if (el.type === "checkbox" || el.type === "radio") {
+
+                display.textContent = el.checked ? "Yes" : "No";
+
+            } else {
+
+                display.textContent = value;
+
+            }
+
+            el.replaceWith(display);
+        });
+
+        /*
+         * Mark media files so the Mac publisher can replace
+         * temporary browser URLs with real published files.
+         */
+        const originalItems =
+            Array.from(document.querySelectorAll(".photo-item"));
+
+        const clonedItems =
+            Array.from(clone.querySelectorAll(".photo-item"));
+
+        const mediaInfo = [];
+
+        originalItems.forEach(function(item, index) {
+
+            const entry = reportFiles.media.find(function(x) {
+                return x.element === item;
+            });
+
+            if (!entry) return;
+
+            const file = entry.file;
+            const field = "media_" + index;
+            const type = file.type.startsWith("video/")
+                ? "video"
+                : "photo";
+
+            item.setAttribute("data-care-file-id", field);
+
+            const cloneItem = clonedItems[index];
+
+            if (cloneItem) {
+
+                cloneItem.setAttribute(
+                    "data-care-file-id",
+                    field
+                );
+
+                cloneItem.setAttribute(
+                    "data-care-file-type",
+                    type
+                );
+
+                /*
+                 * Videos become real customer videos.
+                 */
+                if (type === "video") {
+
+                    const oldImg = cloneItem.querySelector("img");
+
+                    const video = document.createElement("video");
+
+                    video.controls = true;
+                    video.playsInline = true;
+                    video.preload = "metadata";
+                    video.style.width = "100%";
+                    video.style.height = "160px";
+                    video.style.objectFit = "cover";
+
+                    video.setAttribute(
+                        "data-care-file-id",
+                        field
+                    );
+
+                    if (oldImg) {
+                        video.setAttribute(
+                            "data-care-poster",
+                            oldImg.src
+                        );
+                        oldImg.replaceWith(video);
+                    }
+                }
+            }
+
+            form.append(field, file, file.name);
+
+            mediaInfo.push({
+                field: field,
+                type: type,
+                name: file.name
+            });
+        });
+
+        /*
+         * Scanner PDF.
+         */
+        if (reportFiles.scanner) {
+
+            form.append(
+                "scanner",
+                reportFiles.scanner,
+                reportFiles.scanner.name
+            );
+        }
+
+        /*
+         * Tell the Mac publisher what files were sent.
+         */
+        form.append(
+            "media_json",
+            JSON.stringify(mediaInfo)
+        );
+
+        form.append(
+            "report_html",
+            "<!DOCTYPE html>\n" +
+            clone.outerHTML
+        );
+
+        setStatus("Sending report to CARE publisher...", "#C9A227");
+
+        const response = await fetch(
+            "http://127.0.0.1:8765/publish",
+            {
+                method: "POST",
+                body: form
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+            throw new Error(
+                result.error || "Publisher rejected the report."
+            );
+        }
+
+        setStatus(
+            "CARE REPORT PUBLISHED — GITHUB PUSH SUCCESS",
+            "#008000"
+        );
+
+        const reportUrl = result.url;
+
+        const linkBox = document.createElement("div");
+        linkBox.style.cssText =
+            "margin-top:20px;padding:18px;border:1px solid #C9A227;" +
+            "border-radius:10px;background:#111;text-align:center;";
+
+        linkBox.innerHTML =
+            '<div style="color:#C9A227;font-weight:700;font-size:16px;margin-bottom:10px;">' +
+            'CARE REPORT PUBLISHED' +
+            '</div>' +
+            '<div style="color:#fff;font-size:13px;word-break:break-all;margin-bottom:14px;">' +
+            reportUrl +
+            '</div>' +
+            '<button id="careCopyReportLink" ' +
+            'style="background:#C9A227;color:#000;border:0;border-radius:6px;' +
+            'padding:10px 18px;font-weight:700;cursor:pointer;">' +
+            'COPY LINK' +
+            '</button>';
+
+        document.body.appendChild(linkBox);
+
+        document.getElementById("careCopyReportLink").addEventListener("click", async function () {
+            try {
+                await navigator.clipboard.writeText(reportUrl);
+                this.textContent = "LINK COPIED";
+                setTimeout(() => {
+                    this.textContent = "COPY LINK";
+                }, 2000);
+            } catch (e) {
+                alert(reportUrl);
+            }
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "PUBLISH ERROR: " + error.message,
+            "#b00020"
+        );
+
+        alert(
+            "CARE PUBLISH ERROR:\n\n" +
+            error.message
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.style.opacity = "1";
+
+    }
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const button =
+        document.getElementById("carePublishButton");
+
+    if (button) {
+
+        button.addEventListener(
+            "click",
+            publishCAREReport
+        );
+
+    }
+
+});
+</script>
+
+
+
+</body></html>
